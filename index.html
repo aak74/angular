@@ -1,0 +1,25 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Countries</title>
+    <link href="app.css" rel="stylesheet" type="text/css">
+    <script src="//code.angularjs.org/snapshot/angular.min.js"></script>
+    <script src="app.js"></script>
+</head>
+
+<body ng-app="countries">
+    <div ng-controller="CountryController" class="countries">
+        <div ng-repeat="country in countries" class="country">
+            <span ng-bind="country.name" class="country__name"></span>
+            <span ng-bind="country.region" class="country__region"></span>
+            <span ng-bind="country.subregion" class="country__subregion"></span>
+            <span ng-bind="country.population" class="country__population"></span>
+            <span ng-bind="country.area" class="country__area"></span>
+            <span ng-bind="country.population / country.area | number:2" class="country__density"></span>
+        </div>
+    </div>
+</body>
+
+</html>

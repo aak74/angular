@@ -1,0 +1,17 @@
+.countries {
+    display: table;
+}
+
+.country {
+    display: table-row;
+}
+
+.country__name,
+.country__region,
+.country__subregion,
+.country__population,
+.country__area,
+.country__density {
+    display: table-cell;
+    padding: 4px;
+}
