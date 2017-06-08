@@ -1,11 +1,21 @@
+/*.menu-item,*/
+.top-menu {
+    list-style-type: none;
+}
+.menu-item {
+    display: inline-table;
+}
+
 .countries {
     display: table;
 }
 
 .country {
     display: table-row;
+    margin-bottom: 4px;
 }
 
+.country__flag,
 .country__name,
 .country__region,
 .country__subregion,
@@ -14,4 +24,17 @@
 .country__density {
     display: table-cell;
     padding: 4px;
+}
+
+.country__flag {
+    width: 40px;
+    height: 26px;
+}
+
+.region {
+    display: inline-block;
+}
+
+.region__name {
+    padding: 8px;
 }
