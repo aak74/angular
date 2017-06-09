@@ -1,21 +1,54 @@
 <h1>Countries</h1>
-<div class="regions">
-    <h2>Regions</h2>
-    <div class="region" ng-repeat="region in regions">
-        <a class="region__name" ng-bind="region" href="#!/regions/{{ region }}" ng-model="search.region"></a>
+<div class="content container-fluid">
+    <div class="filter col-md-3">
+        <div class="regions">
+            <h2>Filter</h2>
+            <div class="region">
+                <h3>Regions</h3>
+                <span class="region-list" ng-repeat="region in regions">
+                    <button class="region__name btn btn-default" ng-bind="region" ng-click="setRegion(region)"></button>
+                </span>
+                <button class="region__name btn btn-default" ng-click="setRegion()">X</button>
+            </div>
+        </div>
     </div>
-</div>
-<div class="countries">
-    <h2>Countries</h2>
-    Search by Region: <input ng-model="search.region" />
-    <div ng-repeat="country in countries | filter:search" class="country">
-        <span class="country__flag" style="background: url({{country.flag}}) no-repeat; background-size: 40px">
-        </span>
-        <span ng-bind="country.name" class="country__name"></span>
-        <span ng-bind="country.region" class="country__region"></span>
-        <span ng-bind="country.subregion" class="country__subregion"></span>
-        <span ng-bind="country.population" class="country__population"></span>
-        <span ng-bind="country.area" class="country__area"></span>
-        <span ng-bind="country.population / country.area | number:2" class="country__density"></span>
+    <div class="countries col-md-9">
+        <h2>Countries</h2>
+        <div class="country-list">
+            <div class="country-header country" ng-controller="OrderController">
+                <span class="country__number">#</span>
+                <span class="country__flag">Flag</span>
+                <order-by by="name">Name</order-by>
+                <order-by by="language">Language</order-by>
+                <order-by by="region">Region</order-by>
+                <order-by by="subregion">Subregion</order-by>
+                <order-by by="population">Population</order-by>
+                <order-by by="area">Area</order-by>
+                <order-by by="density">Density</order-by>
+            </div>
+            <div class="country-total country">
+                <span class="country__number"></span>
+                <span class="country__flag"></span>
+                <span class="country__name">Filtered countries: {{ filteredCountries.length }}</span>
+                <span class="country__language"></span>
+                <span class="country__region"></span>
+                <span class="country__subregion"></span>
+                <span ng-bind="total.population | number" class="country__population"></span>
+                <span ng-bind="total.area | number" class="country__area"></span>
+                <span ng-bind="total.population / total.area | number:2" class="country__density"></span>
+            </div>
+            <div ng-repeat="country in filteredCountries" class="country">
+                <span ng-bind="country.index" class="country__number"></span>
+                <span class="country__flag" style="background: url({{country.flag}}) no-repeat; background-size: 40px;border: 1px gray;padding:1px;">
+                </span>
+                <span ng-bind="country.name" class="country__name"></span>
+                <span ng-bind="country.language" class="country__language"></span>
+                <span ng-bind="country.region" class="country__region"></span>
+                <span ng-bind="country.subregion" class="country__subregion"></span>
+                <span ng-bind="country.population | number" class="country__population"></span>
+                <span ng-bind="country.area | number" class="country__area"></span>
+                <span ng-bind="country.density | number:2" class="country__density"></span>
+            </div>
+        </div>
     </div>
 </div>

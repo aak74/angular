@@ -6,6 +6,29 @@
     display: inline-table;
 }
 
+.content {
+    position: relative;
+}
+
+.content > div {
+    float: left;
+}
+
+.region {
+    display: inline-block;
+}
+
+.region__name.btn {
+    display: block;
+    width: 100px;
+}
+
+.region__name {
+    margin-left: 10px;
+}
+
+
+
 .countries {
     display: table;
 }
@@ -15,26 +38,31 @@
     margin-bottom: 4px;
 }
 
-.country__flag,
-.country__name,
-.country__region,
-.country__subregion,
-.country__population,
-.country__area,
-.country__density {
+.country > span {
     display: table-cell;
     padding: 4px;
 }
 
+.country order-by {
+    display: table-cell;
+    cursor: pointer;
+}
+
 .country__flag {
     width: 40px;
-    height: 26px;
+    height: 28px;
+    /*border: 1px gray;*/
+    /*background-size: cover;*/
 }
 
-.region {
-    display: inline-block;
+.country-header {
+    font-size: 110%;
 }
 
-.region__name {
-    padding: 8px;
+.country-header order-by:hover {
+    font-weight: 700;
+}
+
+.country-total {
+    background-color: #bbb;
 }

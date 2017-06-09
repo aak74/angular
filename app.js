@@ -33,7 +33,7 @@
 
     app.run(['getter', function(getter) {
         getter.load().then(function(data) {
-            console.log('run load then', data);
+            // console.log('run load then', data);
         });
     }]);
 
@@ -44,12 +44,19 @@
 
         var load = function() {
             return $http.get(URL).then(function(response) {
-                console.log('loadcountries', response);
+                // console.log('loadcountries', response);
                 angular.forEach(response.data, function(country) {
+                    if (!country.area) {
+                        country.area = 1;
+                    }
+                    country.density = country.population / country.area;
+                    country.language = country.languages[0].name;
                     countries.push(country);
-                    regions[country.region] = country.region;
+                    if (country.region) {
+                        regions[country.region] = country.region;
+                    }
                 });
-                console.log('regions', regions);
+                // console.log('regions', regions);
                 return response.data;
             });
         }
@@ -65,6 +72,35 @@
     app.controller('CountriesController', ['$scope', 'getter', function($scope, getter) {
         $scope.countries = getter.countries;
         $scope.regions = getter.regions;
+        $scope.orderBy = 'name';
+        // $scope.search = {};
+
+        $scope.$watch(function () {
+            // console.log('$scope.$watch', $scope);
+            $scope.filteredCountries = $scope.$eval("countries | filter:{region: search}:strict | orderBy: orderBy");
+            $scope.total = {
+                area: 0,
+                population: 0,
+            };
+            angular.forEach($scope.filteredCountries, function(country, index) {
+                country.index = index + 1;
+                $scope.total.area += country.area;
+                $scope.total.population += country.population;
+            });
+        });
+
+        $scope.setRegion = function(region) {
+            // console.log('$scope.setRegion', $scope, region);
+            $scope.search = region;
+        }
+
+        $scope.setOrderBy = function(orderBy) {
+            // console.log('$scope.setOrderBy', orderBy, $scope);
+            $scope.orderBy = ($scope.orderBy == orderBy)
+                ? '-' + orderBy
+                : orderBy;
+        }
+
     }]);
 
     app.controller('RegionsController', ['$scope', 'getter', function($scope, getter) {
@@ -77,6 +113,12 @@
 
     app.controller('PivotController', function() {
     });
+
+    app.controller('OrderController', ['$scope', function($scope) {
+        $scope.isOrderByEqual = function(orderBy) {
+            return orderBy == $scope.orderBy;
+        }
+    }]);
 
 
     app.directive('countries1', function() {
@@ -96,6 +138,21 @@
         scope: true,
         templateUrl: 'countries.template.html',
         // controller: 'CountriesController',
+    });
+
+    app.directive('orderBy', function() {
+        return {
+            restrict: 'EA',
+            scope: true,
+            transclude: true,
+            templateUrl: 'orderBy.template.html',
+            link: function(scope, element, attrs) {
+                // console.log('link orderBy', scope, element, attrs, ctrl);
+                scope.by = attrs.by;
+                // scope.orderBy = scope.$parent.orderBy;
+
+            }
+        }
     });
 
 

@@ -1,0 +1,5 @@
+<span ng-click="setOrderBy(by)" class="country__{{ by }}">
+    <span ng-transclude></span>
+    <span ng-if="isOrderByEqual(by)" class="glyphicon glyphicon-sort-by-attributes" aria-hidden="true"></span>
+    <span ng-show="isOrderByEqual('-' + by)" class="glyphicon glyphicon-sort-by-attributes-alt" aria-hidden="true"></span>
+</span>
