@@ -38,19 +38,22 @@
     }]);
 
     app.factory('getter', ['$http', function($http) {
-        var URL = 'https://restcountries.eu/rest/v2/all';
         var countries = [];
         var regions = {};
 
         var load = function() {
-            return $http.get(URL).then(function(response) {
+            return $http.get('/data/countries.json').then(function(response) {
                 // console.log('loadcountries', response);
                 angular.forEach(response.data, function(country) {
                     if (!country.area) {
                         country.area = 1;
                     }
+                    if (!country.region) {
+                        country.region = 'TBD';
+                    }
                     country.density = country.population / country.area;
                     country.language = country.languages[0].name;
+                    country.flag = '/data/flags/' + country.alpha3Code.toLowerCase() + '.svg';
                     countries.push(country);
                     if (country.region) {
                         regions[country.region] = country.region;
